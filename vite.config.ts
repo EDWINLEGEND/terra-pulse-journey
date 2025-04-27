@@ -19,4 +19,19 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  optimizeDeps: {
+    include: ['clsx', 'tailwind-merge', 'lucide-react'],
+    exclude: ['next'],
+  },
+  build: {
+    rollupOptions: {
+      external: ['next', 'next/image'],
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'framer-motion': ['framer-motion'],
+        }
+      }
+    }
+  }
 }));
