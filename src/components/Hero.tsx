@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { ArrowDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -69,7 +68,7 @@ const Hero: React.FC = () => {
       
       {/* Content */}
       <div className="relative h-full flex flex-col items-center justify-center text-center px-4 z-10">
-        <h1 className="text-white mb-4 drop-shadow-lg opacity-0 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+        <h1 className="text-white mb-4 drop-shadow-lg opacity-0 animate-fade-in-up tracking-tight font-bold leading-tight" style={{ animationDelay: '0.3s', letterSpacing: '-0.025em' }}>
           Our Planet, Our Future
         </h1>
         <p className="text-white/90 max-w-2xl text-lg md:text-xl mb-8 drop-shadow-md opacity-0 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>

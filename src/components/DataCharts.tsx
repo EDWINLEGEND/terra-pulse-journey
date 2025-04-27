@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -68,7 +67,7 @@ const ChartCard: React.FC<ChartCardProps> = ({ title, description, data, color, 
         visible ? "opacity-100 transform translate-x-0" : "opacity-0 translate-x-20"
       )}
     >
-      <h3 className="text-2xl font-bold mb-2">{title}</h3>
+      <h3 className="text-2xl font-bold mb-2 tracking-tight" style={{ letterSpacing: '-0.025em' }}>{title}</h3>
       <p className="mb-6 opacity-80">{description}</p>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
@@ -139,7 +138,7 @@ const DataCharts: React.FC = () => {
   return (
     <section id="data-charts" className="container-section">
       <div className="text-center mb-12">
-        <h2 className="mb-4">Climate Data Trends</h2>
+        <h2 className="mb-4 tracking-tight leading-tight" style={{ letterSpacing: '-0.025em' }}>Climate Data Trends</h2>
         <p className="max-w-2xl mx-auto text-lg opacity-80">
           Historical measurements showing how our planet is changing over time
         </p>

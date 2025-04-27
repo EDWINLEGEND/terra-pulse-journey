@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -92,7 +91,7 @@ export default {
 			},
 			fontFamily: {
 				sans: ['Inter', 'sans-serif'],
-				heading: ['Poppins', 'sans-serif'],
+				heading: ['"Clash Display"', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

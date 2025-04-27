@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Mail, Share2, Award, Heart } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -28,7 +27,9 @@ const ActionCard: React.FC<ActionCardProps> = ({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          cardRef.current?.classList.add('animate-fade-in-up');
+          setTimeout(() => {
+            cardRef.current?.classList.add('animate-fade-in-up');
+          }, delay);
           observer.disconnect();
         }
       },
@@ -40,13 +41,12 @@ const ActionCard: React.FC<ActionCardProps> = ({
     }
     
     return () => observer.disconnect();
-  }, []);
+  }, [delay]);
 
   return (
     <div 
       ref={cardRef}
       className="card-glass opacity-0 hover:translate-y-[-5px] transition-transform duration-300"
-      style={{ animationDelay: `${delay}ms` }}
     >
       <div 
         className={cn(
@@ -56,7 +56,7 @@ const ActionCard: React.FC<ActionCardProps> = ({
       >
         {icon}
       </div>
-      <h3 className="text-xl font-bold mb-2">{title}</h3>
+      <h3 className="text-xl font-bold mb-2 tracking-tight" style={{ letterSpacing: '-0.01em' }}>{title}</h3>
       <p className="mb-6 opacity-80">{description}</p>
       <button 
         onClick={buttonAction} 
@@ -99,11 +99,11 @@ const ActNow: React.FC = () => {
 
   return (
     <section id="act-now" className="container-section">
-      <div className="relative">
+      <div className="relative p-8 rounded-3xl overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-ocean-500/10 to-terra-500/10 rounded-3xl -z-10"></div>
         
         <div className="text-center mb-12">
-          <h2 className="mb-4">Take Action Now</h2>
+          <h2 className="mb-4 tracking-tight leading-tight" style={{ letterSpacing: '-0.025em' }}>Take Action Now</h2>
           <p className="max-w-2xl mx-auto text-lg opacity-80">
             Every action matters. Join us in making a difference for our planet and future generations.
           </p>

@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react';
 import CountUp from './CountUp';
 import { Thermometer, CloudSun, Globe, Award } from 'lucide-react';
@@ -61,7 +60,7 @@ const GlobalSnapshot: React.FC = () => {
   return (
     <section id="global-snapshot" className="container-section">
       <div className="text-center mb-12">
-        <h2 className="mb-4">Global Climate Snapshot</h2>
+        <h2 className="mb-4 tracking-tight leading-tight" style={{ letterSpacing: '-0.025em' }}>Global Climate Snapshot</h2>
         <p className="max-w-2xl mx-auto text-lg opacity-80">
           Key metrics that show the current state of our planet's climate and highlight the urgent need for action
         </p>
