@@ -36,6 +36,8 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+
+    color-scheme: light;
   }
 
   .dark {
@@ -66,6 +68,13 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+
+    color-scheme: dark;
+  }
+
+  html.dark {
+    color: white;
+    background-color: #0a0a0a;
   }
 }
 
@@ -124,4 +133,148 @@
 /* Smooth scrolling for the whole page */
 html {
   scroll-behavior: smooth;
+}
+
+@keyframes blob {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  opacity: 0;
+  animation: twinkle 5s infinite;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0; }
+}
+
+/* These styles are for the glass-card effect */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Ocean, terra, and sunset color custom classes */
+.text-ocean-300 { color: #4DADDF; }
+.text-ocean-400 { color: #3498db; }
+.text-ocean-500 { color: #2980b9; }
+.text-ocean-600 { color: #2471a3; }
+.text-ocean-800 { color: #1a5276; }
+.text-ocean-900 { color: #154360; }
+
+.text-terra-300 { color: #F0B27A; }
+.text-terra-500 { color: #E67E22; }
+.text-terra-600 { color: #D35400; }
+.text-terra-800 { color: #A04000; }
+.text-terra-900 { color: #873600; }
+
+.text-sunset-300 { color: #F1948A; }
+.text-sunset-400 { color: #EC7063; }
+.text-sunset-500 { color: #E74C3C; }
+.text-sunset-600 { color: #CB4335; }
+.text-sunset-800 { color: #922B21; }
+.text-sunset-900 { color: #7B241C; }
+
+.text-green-300 { color: #ABEBC6; }
+.text-green-500 { color: #2ECC71; }
+
+.bg-ocean-600 { background-color: #2471a3; }
+.bg-ocean-800 { background-color: #1a5276; }
+.bg-ocean-900 { background-color: #154360; }
+
+.bg-terra-600 { background-color: #D35400; }
+.bg-sunset-600 { background-color: #CB4335; }
+
+.from-sunset-900\/30 { --tw-gradient-from: rgba(123, 36, 28, 0.3); }
+.to-sunset-800\/10 { --tw-gradient-to: rgba(146, 43, 33, 0.1); }
+
+.from-terra-900\/30 { --tw-gradient-from: rgba(135, 54, 0, 0.3); }
+.to-terra-800\/10 { --tw-gradient-to: rgba(160, 64, 0, 0.1); }
+
+.from-ocean-900\/30 { --tw-gradient-from: rgba(21, 67, 96, 0.3); }
+.to-ocean-800\/10 { --tw-gradient-to: rgba(26, 82, 118, 0.1); }
+
+.from-green-900\/30 { --tw-gradient-from: rgba(22, 101, 52, 0.3); }
+.to-green-800\/10 { --tw-gradient-to: rgba(20, 83, 45, 0.1); }
+
+/* Tailwind doesn't include radial gradients by default, so add it */
+.bg-gradient-radial {
+  background-image: radial-gradient(var(--tw-gradient-stops));
+}
+
+/* Glass style for navbar and cards */
+.glass {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Animation for count-up effect */
+.animate-count-up {
+  animation: count-up 1s forwards;
+}
+
+@keyframes count-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation for fade-in effect */
+.animate-fade-in {
+  animation: fade-in 0.3s forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Container for the main sections */
+.container-section {
+  padding: 6rem 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
 }
