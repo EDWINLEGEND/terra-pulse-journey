@@ -6,6 +6,35 @@
 
 Terra Pulse is an interactive climate awareness experience that visualizes our planet's changing environmental conditions. This web application aims to educate users about climate change through engaging data visualizations, interactive maps, and actionable insights.
 
+## My Journey
+
+### Inspiration
+
+I created Terra Pulse after witnessing the disconnect between complex climate data and public understanding. Seeing how data visualization could transform abstract numbers into powerful stories, I wanted to build a platform that would make climate science accessible to everyone, regardless of their scientific background.
+
+### What I Learned
+
+Building Terra Pulse taught me:
+- The power of data storytelling to drive awareness and action
+- Techniques for optimizing complex visualizations for both desktop and mobile
+- Balancing scientific accuracy with user-friendly interfaces
+- Creating engaging animations that highlight climate patterns without distracting from the data
+
+### How I Built It
+
+I approached this project by first researching reliable climate data sources and identifying key metrics that tell the most compelling story. I built the frontend with React and TypeScript, using Framer Motion for fluid animations and Tailwind CSS for responsive design. For data processing, I created a pipeline that transforms raw climate datasets into optimized formats for web visualization.
+
+### Challenges
+
+The biggest challenges included:
+- Making complex climate data accessible without oversimplification
+- Creating visualizations that work across different screen sizes and devices
+- Optimizing performance when rendering large datasets
+- Balancing educational content with calls to action
+- Ensuring the UI remained engaging while respecting the seriousness of the topic
+
+These challenges pushed me to improve both my technical skills and my understanding of effective climate communication.
+
 ## Features
 
 - **Real-time Climate Data**: Monitor global temperature trends, sea level rise, carbon emissions, and more
