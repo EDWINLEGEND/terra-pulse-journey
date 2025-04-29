@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { Mail, Share2, Award, Heart, Clipboard, HeartHandshake, DollarSign, Check, AlertTriangle, ExternalLink, ChevronRight, Send, User } from 'lucide-react';
+import { Mail, Share2, Award, Heart, Clipboard, HeartHandshake, DollarSign, Check, AlertTriangle, ExternalLink, ChevronRight, Send, User, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ActionCardProps {
   icon: React.ReactNode;
@@ -66,7 +67,7 @@ const ActionCard: React.FC<ActionCardProps> = ({
   const [isHovered, setIsHovered] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [showStatus, setShowStatus] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
+  const [showInfo, setShowInfo] = useState(false);
   
   const colorMap = {
     subscribe: 'from-sky-800/50 to-sky-600/30 hover:from-sky-700/60 hover:to-sky-500/40 border-sky-500/30',
@@ -75,55 +76,34 @@ const ActionCard: React.FC<ActionCardProps> = ({
     donate: 'from-rose-800/50 to-rose-600/30 hover:from-rose-700/60 hover:to-rose-500/40 border-rose-500/30',
   };
 
-  const glowMap = {
-    subscribe: 'shadow-sky-500/20',
-    share: 'shadow-teal-500/20',
-    volunteer: 'shadow-amber-500/20',
-    donate: 'shadow-rose-500/20',
-  };
-
   const handleAction = () => {
     setIsAnimating(true);
     buttonAction();
     setTimeout(() => setIsAnimating(false), 1000);
   };
-  
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            cardRef.current?.classList.add('animate-fade-in-up');
-          }, delay);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
-    }
-    
-    return () => observer.disconnect();
-  }, [delay]);
 
   return (
-    <div 
-      ref={cardRef}
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay: delay / 1000 }}
       className={cn(
-        `relative p-6 rounded-2xl backdrop-blur-sm opacity-0 translate-y-8
-        transition-all duration-300 ease-out border overflow-hidden
-        bg-gradient-to-br ${colorMap[actionType]} ${isHovered ? glowMap[actionType] : ''}`,
+        `relative p-6 rounded-2xl backdrop-blur-sm border overflow-hidden
+        bg-gradient-to-br ${colorMap[actionType]}`,
         isHovered && 'shadow-lg'
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="absolute inset-0 overflow-hidden">
+      <motion.div 
+        className="absolute inset-0 overflow-hidden"
+        animate={isHovered ? { scale: 1.05 } : { scale: 1 }}
+        transition={{ duration: 0.3 }}
+      >
         <div className="absolute top-[-100px] right-[-80px] w-[200px] h-[200px] rounded-full bg-white/5 blur-3xl"></div>
         <div className="absolute bottom-[-30px] left-[-50px] w-[120px] h-[120px] rounded-full bg-white/5 blur-xl"></div>
-      </div>
+      </motion.div>
       
       <div className="relative z-10">
         <div className="flex justify-between mb-3">
@@ -131,44 +111,111 @@ const ActionCard: React.FC<ActionCardProps> = ({
             {icon}
           </div>
           
-          {implementationStatus === 'coming-soon' && (
-            <button 
-              onMouseEnter={() => setShowStatus(true)}
-              onMouseLeave={() => setShowStatus(false)}
-              className="text-white/70 hover:text-white transition-colors"
-            >
-              <AlertTriangle size={18} />
-              {showStatus && (
-                <div className="absolute top-0 right-0 mt-10 glass p-2 rounded-lg text-xs text-white/90 backdrop-blur-md animate-fade-in">
-                  Coming soon
-                  <div className="absolute top-[-6px] right-2 w-3 h-3 glass rotate-45"></div>
-                </div>
-              )}
-            </button>
-          )}
+          <div className="flex gap-2">
+            <div className="relative">
+              <button 
+                onMouseEnter={() => setShowInfo(true)}
+                onMouseLeave={() => setShowInfo(false)}
+                className="text-white/70 hover:text-white transition-colors"
+              >
+                <Info size={18} />
+              </button>
+              <AnimatePresence>
+                {showInfo && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute top-0 right-0 mt-10 glass p-3 rounded-lg text-xs text-white/90 backdrop-blur-md z-50 w-64"
+                  >
+                    <h4 className="font-medium mb-2">How it works:</h4>
+                    <ul className="space-y-2">
+                      <li className="flex items-start gap-2">
+                        <div className="h-4 w-4 rounded-full bg-white/20 flex items-center justify-center mt-0.5">
+                          <Check size={10} className="text-white" />
+                        </div>
+                        <span>Simple and easy process</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="h-4 w-4 rounded-full bg-white/20 flex items-center justify-center mt-0.5">
+                          <Check size={10} className="text-white" />
+                        </div>
+                        <span>Instant confirmation</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="h-4 w-4 rounded-full bg-white/20 flex items-center justify-center mt-0.5">
+                          <Check size={10} className="text-white" />
+                        </div>
+                        <span>Track your impact</span>
+                      </li>
+                    </ul>
+                    <div className="absolute top-[-6px] right-2 w-3 h-3 glass rotate-45"></div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+            
+            {implementationStatus === 'coming-soon' && (
+              <div className="relative">
+                <button 
+                  onMouseEnter={() => setShowStatus(true)}
+                  onMouseLeave={() => setShowStatus(false)}
+                  className="text-white/70 hover:text-white transition-colors"
+                >
+                  <AlertTriangle size={18} />
+                </button>
+                <AnimatePresence>
+                  {showStatus && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute top-0 right-0 mt-10 glass p-3 rounded-lg text-xs text-white/90 backdrop-blur-md z-50 w-64"
+                    >
+                      <h4 className="font-medium mb-2">Coming Soon</h4>
+                      <p>We're working hard to bring this feature to you. Stay tuned for updates!</p>
+                      <div className="absolute top-[-6px] right-2 w-3 h-3 glass rotate-45"></div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )}
+          </div>
         </div>
         
-        <h3 className="text-xl font-bold mb-2 tracking-tight text-white" style={{ letterSpacing: '-0.025em' }}>
+        <motion.h3 
+          className="text-xl font-bold mb-2 tracking-tight text-white" 
+          style={{ letterSpacing: '-0.025em' }}
+          animate={isHovered ? { x: 5 } : { x: 0 }}
+          transition={{ duration: 0.3 }}
+        >
           {title}
-        </h3>
+        </motion.h3>
         
         <p className="mb-6 text-white/80">{description}</p>
         
-        <button 
+        <motion.button
           onClick={handleAction}
           className={cn(
-            "w-full py-3 px-4 rounded-lg font-medium flex items-center justify-center gap-2 transition-all",
+            "w-full py-3 px-4 rounded-lg font-medium flex items-center justify-center gap-2 transition-colors",
             isAnimating ? "animate-pulse" : "",
             implementationStatus === 'ready' 
               ? "bg-white text-slate-900 hover:bg-white/90" 
               : "bg-white/20 text-white hover:bg-white/30"
           )}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
         >
           {isAnimating ? <Check size={18} /> : buttonText}
-          <ChevronRight size={16} className={cn("transition-transform", isHovered ? "translate-x-1" : "")} />
-        </button>
+          <motion.div
+            animate={isHovered ? { x: 5 } : { x: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ChevronRight size={16} />
+          </motion.div>
+        </motion.button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -243,23 +290,76 @@ const ActNow: React.FC = () => {
   };
 
   return (
-    <section id="act-now" className="container-section" ref={sectionRef}>
+    <motion.section 
+      id="act-now" 
+      className="container-section" 
+      ref={sectionRef}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+    >
       <div className="relative overflow-hidden">
-        <div className="absolute w-[400px] h-[400px] top-0 left-1/2 -translate-x-1/2 bg-sunset-600/20 rounded-full blur-[100px] pointer-events-none"></div>
-        <div className="absolute w-[300px] h-[300px] bottom-0 left-[10%] bg-ocean-600/20 rounded-full blur-[100px] pointer-events-none"></div>
+        <motion.div 
+          className="absolute w-[400px] h-[400px] top-0 left-1/2 -translate-x-1/2 bg-sunset-600/20 rounded-full blur-[100px] pointer-events-none"
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.2, 0.3, 0.2],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div 
+          className="absolute w-[300px] h-[300px] bottom-0 left-[10%] bg-ocean-600/20 rounded-full blur-[100px] pointer-events-none"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
         
         <div className="relative">
-          <div className="text-center mb-10">
-            <div className="inline-block mb-3 px-4 py-1 rounded-full bg-sunset-500/20 backdrop-blur-sm">
+          <motion.div 
+            className="text-center mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <motion.div 
+              className="inline-block mb-3 px-4 py-1 rounded-full bg-sunset-500/20 backdrop-blur-sm"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+            >
               <span className="text-sm font-medium">Be part of the solution</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl mb-4 tracking-tight leading-tight" style={{ letterSpacing: '-0.025em' }}>
+            </motion.div>
+            <motion.h2 
+              className="text-4xl md:text-5xl mb-4 tracking-tight leading-tight" 
+              style={{ letterSpacing: '-0.025em' }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
               Take Action Now
-            </h2>
-            <p className="max-w-2xl mx-auto text-lg opacity-80">
+            </motion.h2>
+            <motion.p 
+              className="max-w-2xl mx-auto text-lg opacity-80"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
               Everyone can contribute to climate action. Choose how you want to make a difference today.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="space-y-6">
@@ -469,7 +569,7 @@ const ActNow: React.FC = () => {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
